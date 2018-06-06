@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.yxyl.business.zdwh.dao.ZdwhDao">
+    <!-- 查询总数 -->
+    <select id="countAll" resultType="int" parameterType="zdwhBean">
+        SELECT
+            count(1)
+        FROM
+            dm_zd zd
+        where 1=1
+        <if test="zdmc != null and zdmc != ''">
+            and zdmc like "%"#{zdmc}"%"
+        </if>
+    </select>
+    <!-- 分页查询 -->
+    <select id="queryByPage" resultType="zdwhBean" parameterType="zdwhBean">
+        SELECT
+            lsh,
+            zddm,
+            zdmc,
+            zdjd,
+            zdwd,
+            zddz,
+            csdm,
+            (
+                SELECT
+                    csmc
+                FROM
+                    dm_cs cs
+                WHERE
+                    cs.csdm = zd.csdm
+            ) csmc,
+            kssj,
+            jssj,
+            scbj
+        FROM
+            dm_zd zd
+        where 1=1
+        <if test="zdmc != null and zdmc != ''">
+            and zdmc like "%"#{zdmc}"%"
+        </if>
+        <if test='sort!=null and sort!="" and dir!=null and dir!=""'>
+            order by ${sort} ${dir}
+        </if>
+        limit #{start},#{pageSize}
+    </select>
+    <!-- 查询城市列表 -->
+    <select id="queryCs" resultType="zdwhBean" parameterType="zdwhBean">
+		SELECT
+			csdm,
+			csmc
+		FROM
+			dm_cs
+		WHERE scbj != '1'
+	</select>
+    <!-- 增加 -->
+    <insert id="insert" parameterType="zdwhBean">
+		INSERT INTO
+		dm_zd(lsh,zddm,zdmc,zdjd,zdwd,csdm,zddz,kssj,jssj,scbj)
+		VALUES(#{lsh},#{zddm},#{zdmc},#{zdjd},#{zdwd},#{csdm},#{zddz},#{kssj},#{jssj},'0');
+	</insert>
+    <!-- 修改 -->
+    <update id="update" parameterType="zdwhBean">
+	    UPDATE 
+	    	dm_zd
+	    SET
+			zdmc=#{zdmc},zdjd=#{zdjd},zdwd=#{zdwd},zddz=#{zddz},csdm=#{csdm},kssj=#{kssj},jssj=#{jssj}
+		WHERE zddm=#{zddm}
+	</update>
+    <!-- 删除 -->
+    <update id="delete" parameterType="java.util.List">
+        update dm_zd
+        set scbj = '1'
+        WHERE lsh in
+        <foreach collection="list" item="lshs" open="(" separator="," close=")">
+            #{lshs}
+        </foreach>
+    </update>
+    <!--查询最大站点代码-->
+    <select id="queryMaxZddm" resultType="java.lang.String">
+        select max(zddm) from dm_zd
+    </select>
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans  
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+       http://www.springframework.org/schema/tx  
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
+       http://www.springframework.org/schema/aop  
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+    <!-- 站点维护模块 -->
+    <bean id="zdwhAction" class="com.green.yxyl.business.zdwh.web.ZdwhAction">
+        <property name="zdwhServiceImpl" ref="zdwhServiceImpl"></property>
+    </bean>
+    <!-- 业务层接口 -->
+    <bean id="zdwhServiceImpl" class="com.green.yxyl.business.zdwh.service.impl.ZdwhServiceImpl">
+        <property name="zdwhDao" ref="zdwhDao"></property>
+    </bean>
+    <!-- DAO层-->
+    <bean id="zdwhDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.green.yxyl.business.zdwh.dao.ZdwhDao"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+</beans>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.multipart.maxSize" value="100000000"/>
+	<package name="zdwh" extends="json-default" >
+		<!-- 查询所有 -->
+		<action name="Zdwh_queryAll" class="com.green.yxyl.business.zdwh.web.ZdwhAction" method="queryByPage">
+			<result name="result" type="json">
+  				<param name="root">resultMap</param>
+  			</result>
+		</action>
+		<!-- 查询站点列表 -->
+		<action name="Zdwh_queryZd" class="com.green.yxyl.business.zdwh.web.ZdwhAction" method="queryZd">
+			<result name="result" type="json">
+  				<param name="root">resultList</param>
+  			</result>
+		</action>
+		<!-- 查询机柜列表 -->
+		<action name="Zdwh_queryJg" class="com.green.yxyl.business.zdwh.web.ZdwhAction" method="queryJg">
+			<result name="result" type="json">
+  				<param name="root">resultList</param>
+  			</result>
+		</action>
+		<!-- 查询城市列表 -->
+		<action name="Zdwh_queryCs" class="com.green.yxyl.business.zdwh.web.ZdwhAction" method="queryCs">
+			<result name="result" type="json">
+  				<param name="root">resultList</param>
+  			</result>
+		</action>
+		<!-- 添加 -->
+		<action name="Zdwh_insert" class="com.green.yxyl.business.zdwh.web.ZdwhAction" method="insert">
+			<result name="result" type="json">
+  				<param name="root">resultBean</param>
+  			</result>
+		</action>
+		<!-- 修改 -->
+		<action name="Zdwh_update" class="com.green.yxyl.business.zdwh.web.ZdwhAction" method="update">
+			<result name="result" type="json">
+  				<param name="root">resultBean</param>
+  			</result>
+		</action>
+		<!-- 删除 -->
+		<action name="Zdwh_delete" class="com.green.yxyl.business.zdwh.web.ZdwhAction" method="delete">
+			<result name="result" type="json">
+  				<param name="root">resultBean</param>
+  			</result>
+		</action>
+		
+	</package>
+</struts>
